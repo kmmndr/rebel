@@ -81,6 +81,10 @@ class TestRaw < Minitest::Test
     assert_str_equal(Rebel::SQL.function('COALESCE', :foo, 0), 'COALESCE("foo", 0)')
   end
 
+  def test_where_function
+    assert_str_equal(Rebel::SQL.where?(Rebel::SQL.function('COALESCE', :foo, 0).eq 42), 'WHERE COALESCE("foo", 0) = 42')
+  end
+
   def test_value
     assert_str_equal(Rebel::SQL.value(Rebel::SQL.raw("'FOO'")), "'FOO'")
     assert_str_equal(Rebel::SQL.value('FOO'), "'FOO'")
